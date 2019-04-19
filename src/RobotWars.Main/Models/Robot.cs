@@ -50,13 +50,13 @@ namespace RobotWars.Main.Models
                     CoordinateY = LimitValues(++CoordinateY, Axis.Y);
                     break;
                 case Direction.East:
-                    CoordinateX = LimitValues(++CoordinateY, Axis.Y);
+                    CoordinateX = LimitValues(++CoordinateX, Axis.X);
                     break;
                 case Direction.South:
                     CoordinateY = LimitValues(--CoordinateY, Axis.Y);
                     break;
                 case Direction.West:
-                   CoordinateX = LimitValues(--CoordinateY, Axis.Y);
+                   CoordinateX = LimitValues(--CoordinateX, Axis.X);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -65,12 +65,28 @@ namespace RobotWars.Main.Models
 
         private void TurnLeft()
         {
-            Direction = (Direction)((int)--Direction % 4);
+            Dictionary<Direction, Direction> left = new Dictionary<Direction, Direction>
+            {
+                {Direction.North, Direction.West},
+                {Direction.East, Direction.North },
+                {Direction.South, Direction.East },
+                {Direction.West, Direction.South },
+            };
+
+            Direction = left[Direction];
         }
 
         private void TurnRight()
         {
-            Direction = (Direction)((int)++Direction % 4);
+            Dictionary<Direction, Direction> right = new Dictionary<Direction, Direction>
+            {
+                {Direction.North, Direction.East},
+                {Direction.East, Direction.South },
+                {Direction.South, Direction.West },
+                {Direction.West, Direction.North },
+            };
+
+            Direction = right[Direction];
         }
 
         private int LimitValues(int value, Axis axis)
