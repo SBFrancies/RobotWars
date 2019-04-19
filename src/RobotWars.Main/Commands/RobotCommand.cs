@@ -10,12 +10,10 @@ namespace RobotWars.Main.Commands
     {
         public RobotCommand(char command)
         {
-            CommandText = command.ToString();
+
         }
 
-        public string CommandText { get; }
-
-        public void Run()
+        public void Run(string commandText)
         {
         }
     }

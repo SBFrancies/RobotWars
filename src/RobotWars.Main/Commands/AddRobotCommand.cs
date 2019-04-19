@@ -9,13 +9,13 @@ namespace RobotWars.Main.Commands
 {
     public class AddRobotCommand : RobotWarsGameCommand
     {
-        public AddRobotCommand(IRobotWarsGame game, string text) : base(game, text)
+        public AddRobotCommand(IRobotWarsGame game) : base(game)
         {
         }
 
-        public override void Run()
+        public override void Run(string commandText)
         {
-            string[] parts = CommandText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = commandText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             Robot robot = new Robot(
                 _game,

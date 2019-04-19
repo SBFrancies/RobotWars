@@ -7,15 +7,15 @@ namespace RobotWars.Main.Commands
 {
     public class MoveRobotCommand : RobotWarsGameCommand
     {
-        public MoveRobotCommand(IRobotWarsGame game, string text) : base(game, text)
+        public MoveRobotCommand(IRobotWarsGame game) : base(game)
         {
         }
 
-        public override void Run()
+        public override void Run(string commandText)
         {
-            foreach (char command in CommandText.ToCharArray())
+            foreach (char command in commandText)
             {
-                _game.MoveRobot(new RobotCommand(command));
+                _game.MoveRobot(command.ToString());
             }
         }
     }

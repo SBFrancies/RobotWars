@@ -6,20 +6,22 @@ using RobotWars.Main.Interface;
 
 namespace RobotWars.Main.Command
 {
-    public abstract class RegexCommandReader: ICommandReader
+    public abstract class RegexCommandReader<T>: ICommandReader where T: ICommand
     {
         private readonly Regex _regex;
+        private readonly ICommand _command;
 
-        protected RegexCommandReader(string pattern, RegexOptions options = RegexOptions.None)
+        protected RegexCommandReader(T command, string pattern, RegexOptions options = RegexOptions.None)
         {
             _regex = new Regex(pattern, options);
+            _command = command;
         }
 
-        public void ValidateAndRun(ICommand command)
+        public void ValidateAndRun(string commandText)
         {
-            if (_regex.IsMatch(command.CommandText))
+            if (_regex.IsMatch(commandText))
             {
-                command.Run();
+                _command.Run(commandText);
             }
         }
     }

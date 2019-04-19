@@ -7,11 +7,11 @@ namespace RobotWars.Main.Commands
 {
     public class EndInputCommand : RobotWarsGameCommand
     {
-        public EndInputCommand(IRobotWarsGame game, string text) : base(game, text)
+        public EndInputCommand(IRobotWarsGame game) : base(game)
         {
         }
 
-        public override void Run()
+        public override void Run(string commandText)
         {
             _game.LogPositions();
         }

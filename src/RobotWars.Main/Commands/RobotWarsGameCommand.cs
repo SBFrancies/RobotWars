@@ -9,14 +9,11 @@ namespace RobotWars.Main.Commands
     {
         protected readonly IRobotWarsGame _game;
 
-        protected RobotWarsGameCommand(IRobotWarsGame game, string text)
+        protected RobotWarsGameCommand(IRobotWarsGame game)
         {
             _game = game;
-            CommandText = text;
         }
 
-        public string CommandText { get; }
-
-        public abstract void Run();
+        public abstract void Run(string commandText);
     }
 }

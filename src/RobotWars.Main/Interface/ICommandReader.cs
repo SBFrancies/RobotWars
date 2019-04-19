@@ -7,6 +7,6 @@ namespace RobotWars.Main.Interface
 {
     public interface ICommandReader
     {
-        void ValidateAndRun(ICommand command);
+        void ValidateAndRun(string commandText);
     }
 }

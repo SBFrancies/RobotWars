@@ -27,7 +27,7 @@ namespace RobotWars.Main.Models
             _robots.Add(robot);
         }
 
-        public void MoveRobot(ICommand command)
+        public void MoveRobot(string command)
         {
             _robots.LastOrDefault()?.Move(command);
         }

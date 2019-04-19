@@ -7,14 +7,7 @@ namespace RobotWars.Main.Commands
 {
     public class QuitCommand : ICommand
     {
-        public QuitCommand(string text)
-        {
-            CommandText = text;
-        }
-
-        public string CommandText { get; }
-
-        public void Run()
+        public void Run(string commandText)
         {
             Environment.Exit(0);
         }

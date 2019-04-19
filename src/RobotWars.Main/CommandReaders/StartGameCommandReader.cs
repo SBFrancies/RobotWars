@@ -8,9 +8,9 @@ using RobotWars.Main.Interface;
 
 namespace RobotWars.Main.CommandReaders
 {
-    public class StartGameCommandReader : RegexCommandReader
+    public class StartGameCommandReader<T> : RegexCommandReader<T> where T : ICommand
     {
-        public StartGameCommandReader() : base(@"^\d+ \d+$")
+        public StartGameCommandReader(T command) : base(command, @"^\d+ \d+$")
         {
         }        
     }

@@ -8,7 +8,7 @@ namespace RobotWars.Main.Interface
 {
     public interface IRobot
     {
-        void Move(ICommand command);
+        void Move(string command);
 
         int CoordinateX { get; set; }
 

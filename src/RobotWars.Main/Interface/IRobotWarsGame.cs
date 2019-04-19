@@ -10,7 +10,7 @@ namespace RobotWars.Main.Interface
         int MaxY { get; set; }
         
         void AddRobot(IRobot robot);
-        void MoveRobot(ICommand command);
+        void MoveRobot(string command);
         void LogPositions();
     }
 }

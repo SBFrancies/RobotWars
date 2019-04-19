@@ -18,7 +18,6 @@ namespace RobotWars.Main
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             RegisterServices();
             RegisterObserver();
             new System.Threading.AutoResetEvent(false).WaitOne();
@@ -29,22 +28,34 @@ namespace RobotWars.Main
             _consoleWatcher = Observable
                 .Defer(() =>
                     Observable
-                        .Start(Console.ReadLine)).Repeat().Publish().RefCount();
+                        .Start(_serviceProvider.GetService<IReader>().Read)).Repeat().Publish().RefCount();
 
             IRobotWarsGame game = _serviceProvider.GetService<IRobotWarsGame>();
+            IEnumerable<ICommandReader> commandReaders = _serviceProvider.GetServices<ICommandReader>();
 
-            _consoleWatcher.Subscribe(input => new StartGameCommandReader().ValidateAndRun(new StartGameCommand(game, input)));
-            _consoleWatcher.Subscribe(input => new AddRobotCommandReader().ValidateAndRun(new AddRobotCommand(game, input)));
-            _consoleWatcher.Subscribe(input => new MoveRobotCommandReader().ValidateAndRun(new MoveRobotCommand(game, input)));
-            _consoleWatcher.Subscribe(input => new EndInputCommandReader().ValidateAndRun(new EndInputCommand(game, input)));
-            _consoleWatcher.Subscribe(input => new QuitCommandReader().ValidateAndRun(new QuitCommand(input)));
+            foreach (var reader in commandReaders)
+            {
+                _consoleWatcher.Subscribe(input => reader.ValidateAndRun(input));
+            }
         }
 
         private static void RegisterServices()
         {
             var collection = new ServiceCollection();
             collection.AddSingleton<ILogger, ConsoleLogger>();
+            collection.AddSingleton<IReader, ConsoleReader>();
             collection.AddSingleton<IRobotWarsGame, RobotWarsGame>();
+            collection.AddTransient<ICommandReader, StartGameCommandReader<StartGameCommand>>();
+            collection.AddTransient<ICommandReader, AddRobotCommandReader<AddRobotCommand>>();
+            collection.AddTransient<ICommandReader, MoveRobotCommandReader<MoveRobotCommand>>();
+            collection.AddTransient<ICommandReader, EndInputCommandReader<EndInputCommand>>();
+            collection.AddTransient<ICommandReader, QuitCommandReader<QuitCommand>>();
+            collection.AddTransient<StartGameCommand>();
+            collection.AddTransient<AddRobotCommand>();
+            collection.AddTransient<MoveRobotCommand>();
+            collection.AddTransient<EndInputCommand>();
+            collection.AddTransient<QuitCommand>();
+
             _serviceProvider = collection.BuildServiceProvider();
         }
     }
