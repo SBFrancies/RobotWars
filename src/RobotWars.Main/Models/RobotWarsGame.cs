@@ -24,7 +24,7 @@ namespace RobotWars.Main.Models
 
         public void AddRobot(IRobot robot )
         {
-            _robots.Add(robot);
+            _robots.Add(FitRobotPosition(robot));
         }
 
         public void MoveRobot(string command)
@@ -38,6 +38,14 @@ namespace RobotWars.Main.Models
             {
                 _logger.LogMessage($"{robot.CoordinateX} {robot.CoordinateY} {PrintDirection(robot.Direction)}");
             }
+        }
+
+        private IRobot FitRobotPosition(IRobot robot)
+        {
+            robot.CoordinateX = Math.Min(robot.CoordinateX, MaxX);
+            robot.CoordinateY = Math.Min(robot.CoordinateY, MaxY);
+
+            return robot;
         }
 
         private char PrintDirection(Direction direction)

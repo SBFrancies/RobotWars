@@ -9,7 +9,7 @@ namespace RobotWars.Main.CommandReaders
 {
     public class QuitCommandReader<T> : RegexCommandReader<T> where T : ICommand
     {
-        public QuitCommandReader(T command) : base(command, "quit", RegexOptions.IgnoreCase)
+        public QuitCommandReader(T command) : base(command, "^quit$", RegexOptions.IgnoreCase)
         {
         }
     }
