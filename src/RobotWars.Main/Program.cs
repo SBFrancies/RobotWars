@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RobotWars.Main.Command;
 using RobotWars.Main.CommandReaders;
 using RobotWars.Main.Commands;
+using RobotWars.Main.Enums;
 using RobotWars.Main.Interface;
 using RobotWars.Main.Logging;
 using RobotWars.Main.Models;
@@ -30,7 +31,6 @@ namespace RobotWars.Main
                     Observable
                         .Start(_serviceProvider.GetService<IReader>().Read)).Repeat().Publish().RefCount();
 
-            IRobotWarsGame game = _serviceProvider.GetService<IRobotWarsGame>();
             IEnumerable<ICommandReader> commandReaders = _serviceProvider.GetServices<ICommandReader>();
 
             foreach (var reader in commandReaders)
@@ -55,6 +55,9 @@ namespace RobotWars.Main
             collection.AddTransient<MoveRobotCommand>();
             collection.AddTransient<EndInputCommand>();
             collection.AddTransient<QuitCommand>();
+            collection.AddSingleton<Func<IRobotWarsGame, int, int, Direction, IRobot>>(RobotFactory);
+
+            IRobot RobotFactory(IRobotWarsGame game, int x, int y, Direction direction) => new Robot(game, x, y, direction);
 
             _serviceProvider = collection.BuildServiceProvider();
         }

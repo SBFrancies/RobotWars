@@ -9,15 +9,18 @@ namespace RobotWars.Main.Commands
 {
     public class AddRobotCommand : RobotWarsGameCommand
     {
-        public AddRobotCommand(IRobotWarsGame game) : base(game)
+        private readonly Func<IRobotWarsGame, int, int, Direction, IRobot> _robotFactory;
+
+        public AddRobotCommand(IRobotWarsGame game, Func<IRobotWarsGame, int, int, Direction, IRobot> robotFactory) : base(game)
         {
+            _robotFactory = robotFactory;
         }
 
         public override void Run(string commandText)
         {
             string[] parts = commandText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            Robot robot = new Robot(
+            IRobot robot = _robotFactory(
                 _game,
                 Convert.ToInt32(parts[0]),
                 Convert.ToInt32(parts[1]),
