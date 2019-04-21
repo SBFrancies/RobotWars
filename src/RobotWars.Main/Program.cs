@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +45,7 @@ namespace RobotWars.Main
             var collection = new ServiceCollection();
             collection.AddSingleton<ILogger, ConsoleLogger>();
             collection.AddSingleton<IReader, ConsoleReader>();
+            collection.AddTransient<IList<IRobot>>(a => new List<IRobot>());
             collection.AddSingleton<IRobotWarsGame, RobotWarsGame>();
             collection.AddTransient<ICommandReader, StartGameCommandReader<StartGameCommand>>();
             collection.AddTransient<ICommandReader, AddRobotCommandReader<AddRobotCommand>>();

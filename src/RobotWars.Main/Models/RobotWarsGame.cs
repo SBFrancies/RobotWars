@@ -12,10 +12,10 @@ namespace RobotWars.Main.Models
         private readonly ILogger _logger;
         private readonly IList<IRobot> _robots;
 
-        public RobotWarsGame(ILogger logger)
+        public RobotWarsGame(ILogger logger, IList<IRobot> robots)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
-            _robots = new List<IRobot>();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _robots = robots ?? throw new ArgumentNullException(nameof(robots));
         }
 
         public int MaxX { get; set; }
