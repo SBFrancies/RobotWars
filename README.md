@@ -32,14 +32,19 @@ This project contains the unit tests.
 Example input:
 
 5 5
+
 1 2 N
+
 LMLMLMLMM
+
 3 3 E
+
 MMRMMRMRRM 
 
 Example output:
 
 1 3 N
+
 5 1 E 
 
 ## Notes
@@ -57,6 +62,8 @@ Example output:
 3) Have a penalty system for if the robots attempt to move outside the grid or collide
 
 4) Allow the robots to move in turn rather than consecutively
+
+5) Persist the move list to allow moves to be replayed or rewound
 
 ## Credits
 
